@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net462;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Authors>Ben Duggan, Andrew Smith, Ryan Szemplinski</Authors>
     <PackageProjectUrl>https://github.com/EduSource/QuickBooks.Net</PackageProjectUrl>
     <Description>A C# api wrapper for QuickBooks</Description>
@@ -10,6 +10,12 @@
     <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
     <Copyright>Copyright 2017</Copyright>
     <AssemblyVersion>$(Version)</AssemblyVersion>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
