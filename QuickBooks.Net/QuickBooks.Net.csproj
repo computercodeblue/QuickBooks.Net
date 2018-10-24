@@ -10,10 +10,10 @@
     <AssemblyVersion>$(Version)</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Flurl.Http" Version="1.1.2" />
-    <PackageReference Include="morelinq" Version="2.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="OAuth.DotNetCore" Version="1.0.4" />
+    <PackageReference Include="Flurl.Http" Version="2.4.0" />
+    <PackageReference Include="morelinq" Version="3.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="OAuth.DotNetCore" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickBooks.Net.Data\QuickBooks.Net.Data.csproj" />
