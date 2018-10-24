@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Quickbooks.Net.Payments.Data.Models
+namespace QuickBooks.Net.Payments.Data.Models
 {
     public class Token
     {

@@ -17,5 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickBooks.Net.Data\QuickBooks.Net.Data.csproj" />
+    <ProjectReference Include="..\Quickbooks.Net.Payments.Data\QuickBooks.Net.Payments.Data.csproj" />
   </ItemGroup>
 </Project>
