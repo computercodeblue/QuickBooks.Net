@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quickbooks.Net.Payments.Data
+namespace QuickBooks.Net.Payments
 {
     public class Class1
     {

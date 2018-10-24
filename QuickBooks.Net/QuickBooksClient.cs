@@ -33,7 +33,7 @@ namespace QuickBooks.Net
         public string CallbackUrl { get; set; }
         public bool SandboxMode { get; set; } = true;
         public string RealmId { get; set; }
-        public string MinorVersion { get; set; } = "4";
+        public string MinorVersion { get; set; } = "8";
         public string AcceptType { get; set; } = "application/json";
 
         public ICustomerController Customers { get; }

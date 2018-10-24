@@ -8,7 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickBooks.Net.Tests", "Qui
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickBooks.Net.Data", "QuickBooks.Net.Data\QuickBooks.Net.Data.csproj", "{72FB23E0-7A39-4B44-B64F-1BBB06FD6E41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quickbooks.Net.Payments.Data", "Quickbooks.Net.Payments.Data\Quickbooks.Net.Payments.Data.csproj", "{D56F5673-FEA4-4CFA-89B6-DFF498EEE299}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickBooks.Net.Payments.Data", "Quickbooks.Net.Payments.Data\QuickBooks.Net.Payments.Data.csproj", "{D56F5673-FEA4-4CFA-89B6-DFF498EEE299}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickBooks.Net.Payments", "QuickBooks.Net.Payments\QuickBooks.Net.Payments.csproj", "{ADFC16B2-57BE-467E-A540-F1538CD0C228}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,18 @@ Global
 		{D56F5673-FEA4-4CFA-89B6-DFF498EEE299}.Release|x64.Build.0 = Release|Any CPU
 		{D56F5673-FEA4-4CFA-89B6-DFF498EEE299}.Release|x86.ActiveCfg = Release|Any CPU
 		{D56F5673-FEA4-4CFA-89B6-DFF498EEE299}.Release|x86.Build.0 = Release|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Debug|x64.Build.0 = Debug|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Debug|x86.Build.0 = Debug|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Release|x64.ActiveCfg = Release|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Release|x64.Build.0 = Release|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Release|x86.ActiveCfg = Release|Any CPU
+		{ADFC16B2-57BE-467E-A540-F1538CD0C228}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
