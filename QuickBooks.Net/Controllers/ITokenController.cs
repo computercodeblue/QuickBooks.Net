@@ -3,7 +3,7 @@ using QuickBooks.Net.Payments.Data.Models;
 
 namespace QuickBooks.Net.Controllers
 {
-    interface ITokenController
+    public interface ITokenController
     {
         Task<Token> Create(Card card);
 

@@ -5,7 +5,7 @@ using QuickBooks.Net.Payments.Data.Models;
 
 namespace QuickBooks.Net.Controllers
 {
-    interface ICardController
+    public interface ICardController
     {
         Task<Card> CreateAsync(Card card);
 

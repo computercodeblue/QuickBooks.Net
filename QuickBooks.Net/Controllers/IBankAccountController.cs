@@ -5,7 +5,7 @@ using QuickBooks.Net.Payments.Data.Models;
 
 namespace QuickBooks.Net.Controllers
 {
-    interface IBankAccountController
+    public interface IBankAccountController
     {
         Task<BankAccount> CreateAsync(BankAccount bankAccount);
 

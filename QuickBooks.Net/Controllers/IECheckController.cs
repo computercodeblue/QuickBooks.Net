@@ -5,7 +5,7 @@ using QuickBooks.Net.Payments.Data.Models;
 
 namespace QuickBooks.Net.Controllers
 {
-    interface IECheckController
+    public interface IECheckController
     {
         Task<ECheck> CreateAsync(ECheck eCheck);
 

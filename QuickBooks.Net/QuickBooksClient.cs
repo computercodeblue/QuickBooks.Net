@@ -44,6 +44,12 @@ namespace QuickBooks.Net
         public ISalesReceiptController SalesReceipts { get; }
         public IClassController Classes { get; }
 
+        public IChargeController Charges { get; }
+        public ITokenController Tokens { get; }
+        public IBankAccountController BankAccounts { get; }
+        public ICardController Cards { get; }
+        public IECheckController EChecks { get; }
+
         public QuickBooksClient()
         {
             Customers = new CustomerController(this, OAuthVersion);
