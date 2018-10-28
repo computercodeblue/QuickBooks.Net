@@ -9,7 +9,7 @@ namespace QuickBooks.Net.Controllers
 
         Task<Charge> CreateChargeAsync(Charge charge);
 
-        Task<Charge> CaptureChargeAsync(CaptureCharge capture);
+        Task<Charge> CaptureChargeAsync(string chargeId, CaptureCharge capture);
 
         Task<Refund> RefundChargeAsync(string chargeId, Refund refund);
 

@@ -7,18 +7,28 @@ namespace QuickBooks.Net.Controllers
 {
     public interface ICardController
     {
-        Task<Card> CreateAsync(Card card);
+        Task<Card> CreateAsync(string customerId, Card Card);
 
-        Task<Card> CreateFromTokenAsync(string token);
+        Task<Card> CreateAsync(Customer customer, Card Card);
 
-        Task<Card> DeleteAsync(string id);
+        Task<Card> CreateFromTokenAsync(string customerId, Token token);
 
-        Task<Card> DeleteAsync(Card card);
+        Task<Card> CreateFromTokenAsync(Customer customer, Token token);
 
-        Task<Card> GetAsync(string id);
+        Task<Card> DeleteAsync(string customerId, string cardId);
 
-        Task<IEnumerable<Card>> GetCustomerBankAccounts(string customerId);
+        Task<Card> DeleteAsync(Customer customer, string cardId);
 
-        Task<IEnumerable<Card>> GetCustomerBankAccounts(Customer customer);
+        Task<Card> DeleteAsync(string customerId, Card card);
+
+        Task<Card> DeleteAsync(Customer customer, Card card);
+
+        Task<Card> GetAsync(string customerId, string cardId);
+
+        Task<Card> GetAsync(Customer customer, string cardId);
+
+        Task<List<Card>> GetCustomerCardsAsync(string customerId);
+
+        Task<List<Card>> GetCustomerCardsAsync(Customer customer);
     }
 }

@@ -24,8 +24,6 @@ namespace QuickBooks.Net.Controllers
 
         #endregion
 
-        protected abstract string ObjectName { get; }
-        protected abstract string ResourceName { get; }
         private readonly string _oAuthVersion;
 
         private string Url
@@ -45,7 +43,7 @@ namespace QuickBooks.Net.Controllers
             _oAuthVersion = oAuthVersion;
         }
 
-        private async Task<T> MakeRequest<T>(string resourceUrl, HttpMethod requestMethod, object content = null, bool update = false, bool delete = false)
+        protected async Task<T> MakeRequest<T>(string objectName, string resourceUrl, HttpMethod requestMethod, object content = null, bool update = false, bool delete = false)
         {
             var url = Url + resourceUrl;
 
@@ -53,9 +51,13 @@ namespace QuickBooks.Net.Controllers
 
             var client = url.WithHeaders(new
             {
-                Accept = accept,
-                Authorization = GetAuthHeader(url, requestMethod)
+                Accept = accept
             });
+
+            client.Headers.Add("Request-Id", System.Guid.NewGuid().ToString());
+
+            if (objectName != "Token")
+                client.Headers.Add("Authorization", GetAuthHeader(url, requestMethod));
 
             try
             {
@@ -63,16 +65,16 @@ namespace QuickBooks.Net.Controllers
                 {
 
                     var objectResponse = await client.GetJsonAsync<JObject>();
-                    return objectResponse[ObjectName].ToObject<T>();
+                    return objectResponse[objectName].ToObject<T>();
                 }
 
                 if (requestMethod == HttpMethod.Post)
                 {
                     var response = await client.PostJsonAsync(content);
-
+                    
                     var responseContentString = await response.Content.ReadAsStringAsync();
                     var responseContent = JsonConvert.DeserializeObject<JObject>(responseContentString);
-                    return responseContent[ObjectName].ToObject<T>();
+                    return responseContent[objectName].ToObject<T>();
                 }
 
                 return default(T);

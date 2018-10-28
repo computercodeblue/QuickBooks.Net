@@ -7,18 +7,28 @@ namespace QuickBooks.Net.Controllers
 {
     public interface IBankAccountController
     {
-        Task<BankAccount> CreateAsync(BankAccount bankAccount);
+        Task<BankAccount> CreateAsync(string customerId, BankAccount bankAccount);
 
-        Task<BankAccount> CreateFromTokenAsync(string token);
+        Task<BankAccount> CreateAsync(Customer customer, BankAccount bankAccount);
 
-        Task<BankAccount> DeleteAsync(string id);
+        Task<BankAccount> CreateFromTokenAsync(string customerId, Token token);
 
-        Task<BankAccount> DeleteAsync(BankAccount bankAccount);
+        Task<BankAccount> CreateFromTokenAsync(Customer customer, Token token);
 
-        Task<BankAccount> GetAsync(string id);
+        Task<BankAccount> DeleteAsync(string customerId, string bankAccountId);
 
-        Task<IEnumerable<BankAccount>> GetCustomerBankAccounts(string customerId);
+        Task<BankAccount> DeleteAsync(Customer customer, string bankAccountId);
 
-        Task<IEnumerable<BankAccount>> GetCustomerBankAccounts(Customer customer);
+        Task<BankAccount> DeleteAsync(string customerId, BankAccount bankAccount);
+
+        Task<BankAccount> DeleteAsync(Customer customer, BankAccount bankAccount);
+
+        Task<BankAccount> GetAsync(string customerId, string bankAccountId);
+
+        Task<BankAccount> GetAsync(Customer customer, string bankAccountId);
+
+        Task<List<BankAccount>> GetCustomerBankAccountsAsync(string customerId);
+
+        Task<List<BankAccount>> GetCustomerBankAccountsAsync(Customer customer);
     }
 }

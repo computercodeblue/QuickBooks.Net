@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using QuickBooks.Net.Data.Models;
+﻿using System.Threading.Tasks;
 using QuickBooks.Net.Payments.Data.Models;
 
 namespace QuickBooks.Net.Controllers

@@ -5,8 +5,8 @@ namespace QuickBooks.Net.Controllers
 {
     public interface ITokenController
     {
-        Task<Token> Create(Card card);
+        Task<Token> CreateTokenAsync(Card card);
 
-        Task<Token> Create(BankAccount bankAccount);
+        Task<Token> CreateTokenAsync(BankAccount bankAccount);
     }
 }
