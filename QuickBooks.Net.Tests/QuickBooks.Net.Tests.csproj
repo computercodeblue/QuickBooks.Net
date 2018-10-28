@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QuickBooks.Net.Data\QuickBooks.Net.Data.csproj" />
     <ProjectReference Include="..\QuickBooks.Net\QuickBooks.Net.csproj" />
   </ItemGroup>
 </Project>

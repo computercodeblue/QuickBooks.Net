@@ -14,22 +14,22 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Charge> CaptureChargeAsync(string chargeId, CaptureCharge capture)
         {
-            return await MakeRequest<Charge>("Charge", "/payments/charges/" + chargeId + "/capture", HttpMethod.Post, JsonConvert.SerializeObject(capture), false, false);
+            return await MakeRequest<Charge>("Charge", "payments/charges/" + chargeId + "/capture", HttpMethod.Post, JsonConvert.SerializeObject(capture), false, false);
         }
 
         public async Task<Charge> CreateChargeAsync(Charge charge)
         {
-            return await MakeRequest<Charge>("Charge", "/payments/charges", HttpMethod.Post, JsonConvert.SerializeObject(charge), false, false);
+            return await MakeRequest<Charge>("Charge", "payments/charges", HttpMethod.Post, JsonConvert.SerializeObject(charge), false, false);
         }
 
         public async Task<Charge> GetChargeAsync(string chargeId)
         {
-            return await MakeRequest<Charge>("Charge", "/payments/charges/" + chargeId, HttpMethod.Get);
+            return await MakeRequest<Charge>("Charge", "payments/charges/" + chargeId, HttpMethod.Get);
         }
 
         public async Task<Refund> GetRefundById(string chargeId, string refundId)
         {
-            return await MakeRequest<Refund>("Refund", "/payments/charges/" + chargeId + "/refunds/" + refundId, HttpMethod.Get);
+            return await MakeRequest<Refund>("Refund", "payments/charges/" + chargeId + "/refunds/" + refundId, HttpMethod.Get);
         }
 
         public async Task<Refund> GetRefundById(Charge charge, string refundId)
@@ -39,7 +39,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Refund> RefundChargeAsync(string chargeId, Refund refund)
         {
-            return await MakeRequest<Refund>("Refund", "/payments/charges/" + chargeId + "/refunds", HttpMethod.Post, JsonConvert.SerializeObject(refund));
+            return await MakeRequest<Refund>("Refund", "payments/charges/" + chargeId + "/refunds", HttpMethod.Post, JsonConvert.SerializeObject(refund));
         }
 
         public async Task<Refund> RefundChargeAsync(Charge charge, Refund refund)

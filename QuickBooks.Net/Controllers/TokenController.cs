@@ -13,12 +13,12 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Token> CreateTokenAsync(Card card)
         {
-            return await MakeRequest<Token>("Token", "/payments/tokens", HttpMethod.Post, JsonConvert.SerializeObject(card), false, false);
+            return await MakeRequest<Token>("Token", "payments/tokens", HttpMethod.Post, JsonConvert.SerializeObject(card));
         }
 
         public async Task<Token> CreateTokenAsync(BankAccount bankAccount)
         {
-            return await MakeRequest<Token>("Token", "/payments/tokens", HttpMethod.Post, JsonConvert.SerializeObject(bankAccount), false, false);
+            return await MakeRequest<Token>("Token", "payments/tokens", HttpMethod.Post, JsonConvert.SerializeObject(bankAccount));
         }
     }
 }

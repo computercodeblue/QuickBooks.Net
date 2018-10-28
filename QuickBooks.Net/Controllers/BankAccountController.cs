@@ -15,7 +15,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<BankAccount> CreateAsync(string customerId, BankAccount bankAccount)
         {
-            return await MakeRequest<BankAccount>("BankAccount", "/customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(bankAccount));
+            return await MakeRequest<BankAccount>("BankAccount", "customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(bankAccount));
         }
 
         public async Task<BankAccount> CreateAsync(Customer customer, BankAccount bankAccount)
@@ -25,7 +25,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<BankAccount> CreateFromTokenAsync(string customerId, Token token)
         {
-            return await MakeRequest<BankAccount>("BankAccount", "/customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(token));
+            return await MakeRequest<BankAccount>("BankAccount", "customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(token));
         }
 
         public async Task<BankAccount> CreateFromTokenAsync(Customer customer, Token token)
@@ -35,7 +35,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<BankAccount> DeleteAsync(string customerId, string bankAccountId)
         {
-            return await MakeRequest<BankAccount>("BankAccount", "/customers/" + customerId + "/bank-accounts/" + bankAccountId, HttpMethod.Delete, null, false, true);
+            return await MakeRequest<BankAccount>("BankAccount", "customers/" + customerId + "/bank-accounts/" + bankAccountId, HttpMethod.Delete, null, false, true);
         }
 
         public async Task<BankAccount> DeleteAsync(Customer customer, string bankAccountId)
@@ -55,7 +55,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<BankAccount> GetAsync(string customerId, string bankAccountId)
         {
-            return await MakeRequest<BankAccount>("BankAccount", "/customers/" + customerId + "/bank-accounts/" + bankAccountId, HttpMethod.Get);
+            return await MakeRequest<BankAccount>("BankAccount", "customers/" + customerId + "/bank-accounts/" + bankAccountId, HttpMethod.Get);
         }
 
         public async Task<BankAccount> GetAsync(Customer customer, string bankAccountId)

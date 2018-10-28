@@ -15,7 +15,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> CreateAsync(string customerId, Card Card)
         {
-            return await MakeRequest<Card>("Card", "/customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(Card));
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(Card));
         }
 
         public async Task<Card> CreateAsync(Customer customer, Card Card)
@@ -25,7 +25,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> CreateFromTokenAsync(string customerId, Token token)
         {
-            return await MakeRequest<Card>("Card", "/customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(token));
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(token));
         }
 
         public async Task<Card> CreateFromTokenAsync(Customer customer, Token token)
@@ -35,7 +35,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> DeleteAsync(string customerId, string CardId)
         {
-            return await MakeRequest<Card>("Card", "/customers/" + customerId + "/bank-accounts/" + CardId, HttpMethod.Delete, null, false, true);
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts/" + CardId, HttpMethod.Delete, null, false, true);
         }
 
         public async Task<Card> DeleteAsync(Customer customer, string CardId)
@@ -55,7 +55,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> GetAsync(string customerId, string CardId)
         {
-            return await MakeRequest<Card>("Card", "/customers/" + customerId + "/bank-accounts/" + CardId, HttpMethod.Get);
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts/" + CardId, HttpMethod.Get);
         }
 
         public async Task<Card> GetAsync(Customer customer, string CardId)

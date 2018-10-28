@@ -13,12 +13,12 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<ECheck> CreateAsync(ECheck eCheck)
         {
-            return await MakeRequest<ECheck>("ECheck", "/payments/echecks", HttpMethod.Post, JsonConvert.SerializeObject(eCheck));
+            return await MakeRequest<ECheck>("ECheck", "payments/echecks", HttpMethod.Post, JsonConvert.SerializeObject(eCheck));
         }
 
         public async Task<ECheck> GetAsync(string id)
         {
-            return await MakeRequest<ECheck>("ECheck", "payments/echecks" + id, HttpMethod.Get);
+            return await MakeRequest<ECheck>("ECheck", "payments/echecks/" + id, HttpMethod.Get);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace QuickBooks.Net.Controllers
                 Accept = accept
             });
 
-            client.Headers.Add("Request-Id", System.Guid.NewGuid().ToString());
+            client.Headers.Add("Request-Id", Guid.NewGuid().ToString());
 
             if (objectName != "Token")
                 client.Headers.Add("Authorization", GetAuthHeader(url, requestMethod));
@@ -105,6 +105,10 @@ namespace QuickBooks.Net.Controllers
                         ex.Call.Response.Content.ReadAsStringAsync().Result);
 
                 throw new QuickBooksException("A Quickbooks exception occurred.", response);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("Make Request Exception");
             }
         }
 
