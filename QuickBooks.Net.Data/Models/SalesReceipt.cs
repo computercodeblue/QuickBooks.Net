@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using QuickBooks.Net.Data.Models.Fields;
+using QuickBooks.Net.Data.Models.Fields.Credit_Card;
 using QuickBooks.Net.Data.Models.Fields.Line_Items.Invoice_Line;
 
 namespace QuickBooks.Net.Data.Models
@@ -34,6 +35,9 @@ namespace QuickBooks.Net.Data.Models
 
         [JsonProperty("Line", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public List<InvoiceLine> Lines { get; set; }
+
+        [JsonProperty("CreditCardPayment", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public CreditCardPayment CreditCardPayment { get; set; }
 
         internal override QuickBooksBaseModel CreateReturnObject()
         {

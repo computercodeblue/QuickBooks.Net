@@ -59,6 +59,12 @@ namespace QuickBooks.Net
             Deposits = new DepositController(this, OAuthVersion);
             SalesReceipts = new SalesReceiptController(this, OAuthVersion);
             Classes = new ClassController(this, OAuthVersion);
+
+            Charges = new ChargeController(this, OAuthVersion);
+            Cards = new CardController(this, OAuthVersion);
+            BankAccounts = new BankAccountController(this, OAuthVersion);
+            Tokens = new TokenController(this, OAuthVersion);
+            EChecks = new ECheckController(this, OAuthVersion);
         }
 
         public QuickBooksClient(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret,

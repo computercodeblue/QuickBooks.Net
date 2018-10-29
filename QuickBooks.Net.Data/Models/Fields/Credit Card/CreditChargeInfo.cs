@@ -12,6 +12,8 @@ namespace QuickBooks.Net.Data.Models.Fields.Credit_Card
 
         public int CcExpiryMonth { get; set; }
 
+        public int CcExpiryYear { get; set; }
+
         [JsonProperty("BillAddrStreet")]
         public string BillingAddressStreet { get; set; }
 

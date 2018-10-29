@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Flurl;
 using Flurl.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -55,8 +53,8 @@ namespace QuickBooks.Net.Controllers
             });
 
             client.Headers.Add("Request-Id", Guid.NewGuid().ToString());
-
-            if (objectName != "Token")
+            
+            if (typeof(T).ToString() != "QuickBooks.Net.Payments.Data.Models.Token")
                 client.Headers.Add("Authorization", GetAuthHeader(url, requestMethod));
 
             try
@@ -70,11 +68,14 @@ namespace QuickBooks.Net.Controllers
 
                 if (requestMethod == HttpMethod.Post)
                 {
-                    var response = await client.PostJsonAsync(content);
-                    
+                    client.Headers.Add("Content-Type", "application/json");
+                    string body = JsonConvert.SerializeObject(content);
+                    var response = await client.PostStringAsync(body);
+                    //var response = await client.PostJsonAsync(content);
+
                     var responseContentString = await response.Content.ReadAsStringAsync();
-                    var responseContent = JsonConvert.DeserializeObject<JObject>(responseContentString);
-                    return responseContent[objectName].ToObject<T>();
+                    var responseContent = JsonConvert.DeserializeObject<T>(responseContentString);
+                    return responseContent;
                 }
 
                 return default(T);
@@ -104,11 +105,8 @@ namespace QuickBooks.Net.Controllers
                     JsonConvert.DeserializeObject<QuickBooksErrorResponse>(
                         ex.Call.Response.Content.ReadAsStringAsync().Result);
 
-                throw new QuickBooksException("A Quickbooks exception occurred.", response);
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine("Make Request Exception");
+
+                throw new QuickBooksException("A Quickbooks exception occurred." + ex.Call.Response.Content.ReadAsStringAsync().Result, response);
             }
         }
 

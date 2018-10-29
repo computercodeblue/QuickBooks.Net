@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 using QuickBooks.Net.Payments.Data.Models.Fields;
 
@@ -9,17 +8,17 @@ namespace QuickBooks.Net.Payments.Data.Models
 {
     public enum ChargeStatus
     {
-        Authorized,
-        Declined,
-        Captured,
         Cancelled,
+        Declined,
+        Authorized,
+        Captured,
         Settled,
         Refunded
     }
 
     public class Charge : QuickBooksPaymentsBaseModelString
     {
-        [JsonProperty("id", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("status", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ChargeStatus Status { get; set; }
 
         [JsonProperty("amount", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -51,6 +50,12 @@ namespace QuickBooks.Net.Payments.Data.Models
 
         [JsonProperty("description", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Description { get; set; }
+
+        [JsonProperty("avsStreet", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string AvsStreet { get; set; }
+
+        [JsonProperty("avsZip", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string AvsZip { get; set; }
 
         internal override QuickBooksPaymentsBaseModelString CreateReturnObject()
         {

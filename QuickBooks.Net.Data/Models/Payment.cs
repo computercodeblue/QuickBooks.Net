@@ -43,7 +43,7 @@ namespace QuickBooks.Net.Data.Models
         public string PaymentRefNumber { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public CreditChargeResponse CreditChargeResponse { get; set; }
+        public CreditCardPayment CreditCardPayment { get; set; }
 
         [JsonProperty("TxnSource", NullValueHandling = NullValueHandling.Ignore)]
         public string TransactionSource { get; set; }

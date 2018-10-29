@@ -5,61 +5,57 @@ using QuickBooks.Net.Payments.Data.Models.Fields;
 
 namespace QuickBooks.Net.Payments.Data.Models
 {
-    public enum CardType
+    public class CardObject
     {
-        VISA,
-        MC,
-        AMEX,
-        DISC,
-        DINERS,
-        JCB
+        [JsonProperty("card", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public Card Card { get; set; }
     }
 
     public class Card : QuickBooksPaymentsBaseModelString
     {
-        [JsonProperty("updated")]
+        [JsonProperty("updated", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public DateTime Updated { get; set; }
 
-        [JsonProperty("number")]
+        [JsonProperty("number", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Number { get; set; }
 
-        [JsonProperty("expMonth")]
+        [JsonProperty("expMonth", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ExpMonth { get; set; }
 
-        [JsonProperty("expYear")]
+        [JsonProperty("expYear", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ExpYear { get; set; }
 
-        [JsonProperty("cvc")]
+        [JsonProperty("cvc", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Cvc { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty("address")]
+        [JsonProperty("address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public CardholderAddress Address { get; set; }
 
-        [JsonProperty("default")]
+        [JsonProperty("default", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Default { get; set; }
 
-        [JsonProperty("commercialCardCode")]
+        [JsonProperty("commercialCardCode", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string CommercialCardCode { get; set; }
 
-        [JsonProperty("cvcVerification")]
+        [JsonProperty("cvcVerification", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string CvcVerification { get; set; }
 
-        [JsonProperty("isBusiness")]
+        [JsonProperty("isBusiness", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsBusiness { get; set; }
 
-        [JsonProperty("cardType")]
-        public CardType CardType { get; set; }
+        [JsonProperty("cardType", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string CardType { get; set; }
 
-        [JsonProperty("capture")]
+        [JsonProperty("capture", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Capture { get; set; }
 
-        [JsonProperty("authCode")]
+        [JsonProperty("authCode", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string AuthCode { get; set; }
 
-        [JsonProperty("description")]
+        [JsonProperty("description", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Description { get; set; }
 
         internal override QuickBooksPaymentsBaseModelString CreateReturnObject()
