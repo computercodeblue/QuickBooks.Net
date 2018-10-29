@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Configuration;
+
 using QuickBooks.Net.Exceptions;
 using QuickBooks.Net.Data.Models;
 using QuickBooks.Net.Payments.Data.Models;
@@ -18,21 +20,34 @@ namespace QuickBooks.Net.Tests
         
         public async static Task MainAsync(string[] args)
         {
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            var configuration = builder.Build();
+
             TestCustomers testCustomers = new TestCustomers();
             Random rand = new Random();
 
-            Console.WriteLine("Test Customers: {0}", testCustomers.Customers.Count);
+            Console.WriteLine("{0} random credit card numbers and names read.", testCustomers.Customers.Count);
+            Console.WriteLine();
 
             QuickBooksClient qb = new QuickBooksClient
             {
-                ConsumerKey = "lvprdnjlbJTTRHqnPQ4sEmBRqobhgB",
-                ConsumerSecret = "FaauGpvwswMKSpassnaWr7J43CEPZFJg1WPXTBwo",
-                AccessToken = "lvprdpQ7c9eTvtlHt6g9oRaEFljN8hPZelsuRoWdNuJyMo9w",
-                AccessTokenSecret = "64hkS6iOaGRl68L15ifPamarMKImuMqsz3fEsTo3",
-                CallbackUrl = "",
-                RealmId = "123145773458229",
-                SandboxMode = true
+                ConsumerKey = configuration.GetSection("QuickBooksOptions")["ConsumerKey"],
+                ConsumerSecret = configuration.GetSection("QuickBooksOptions")["ConsumerSecret"],
+                AccessToken = configuration.GetSection("QuickBooksOptions")["AccessToken"],
+                AccessTokenSecret = configuration.GetSection("QuickBooksOptions")["AccessTokenSecret"],
+                CallbackUrl = configuration.GetSection("QuickBooksOptions")["CallbackUrl"],
+                RealmId = configuration.GetSection("QuickBooksOptions")["RealmId"],
+                SandboxMode = Convert.ToBoolean(configuration.GetSection("QuickBooksOptions")["SandboxMode"])
             };
+
+            Console.WriteLine("Consumer Key: {0}", qb.ConsumerKey);
+            Console.WriteLine("Consumer Secret: {0}", qb.ConsumerSecret);
+            Console.WriteLine("Access Token: {0}", qb.AccessToken);
+            Console.WriteLine("Access Token Secret: {0}", qb.AccessTokenSecret);
+            Console.WriteLine("Callback Url: {0}", qb.CallbackUrl);
+            Console.WriteLine("Realm Id: {0}", qb.RealmId);
+            Console.WriteLine("Sandbox Mode: {0}", qb.SandboxMode);
+            Console.WriteLine();
 
             List<Customer> customers = new List<Customer>(await qb.Customers.GetCustomersAsync());
 
@@ -95,8 +110,7 @@ namespace QuickBooks.Net.Tests
                 Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Customers: {0}", customers.Count);
+            Console.WriteLine("{0} QuickBooks customers for this company.", customers.Count);
 
             if (token != null)
                 Console.WriteLine("Token Value: {0}", token.Value);
