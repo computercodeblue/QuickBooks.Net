@@ -41,7 +41,7 @@ namespace QuickBooks.Net.Payments.Data.Models
         public string CommercialCardCode { get; set; }
 
         [JsonProperty("cvcVerification", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string CvcVerification { get; set; }
+        public CvcVerification CvcVerification { get; set; }
 
         [JsonProperty("isBusiness", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsBusiness { get; set; }

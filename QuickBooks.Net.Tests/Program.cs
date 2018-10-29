@@ -189,6 +189,229 @@ namespace QuickBooks.Net.Tests
 
             Console.WriteLine("Receipt {0} created for customer {1}", receipt.Id, qbCustomer.Id);
 
+            TestCustomer randomCustomer = testCustomers.Customers[rand.Next(0, 2999)];
+
+            Customer newCustomer = new Customer
+            {
+                GivenName = randomCustomer.FirstName,
+                MiddleName = randomCustomer.MiddleInitial,
+                FamilyName = randomCustomer.LastName,
+                DisplayName = randomCustomer.FullName,
+                BillingAddress = new Data.Models.Fields.Address
+                {
+                    Line1 = randomCustomer.StreetAddress,
+                    City = randomCustomer.City,
+                    Country = randomCustomer.Country,
+                    CountrySubDivisionCode = randomCustomer.State,
+                    PostalCode = randomCustomer.PostalCode
+                }
+            };
+
+            try
+            {
+                newCustomer = await qb.Customers.CreateCustomerAsync(newCustomer);
+            }
+            catch (QuickBooksException ex)
+            {
+                Console.WriteLine(ex.Message);
+                foreach (Data.Error_Responses.ErrorDetailResponse error in ex.Response.Fault.Errors)
+                {
+                    Console.WriteLine("Code: {0}", error.Code);
+                    Console.WriteLine("Detail: {0}", error.Detail);
+                    Console.WriteLine("Element: {0}", error.Element);
+                    Console.WriteLine("Message: {0}", error.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            Console.WriteLine("New customer {0} created with ID {1}.", newCustomer.DisplayName, newCustomer.Id.ToString());
+
+            Card newCard = new Card()
+            {
+                Address = new CardholderAddress()
+                {
+                    City = newCustomer.BillingAddress.City,
+                    Country = newCustomer.BillingAddress.Country,
+                    PostalCode = newCustomer.BillingAddress.PostalCode,
+                    StreetAddress = newCustomer.BillingAddress.Line1,
+                    Region = newCustomer.BillingAddress.CountrySubDivisionCode
+                },
+                ExpMonth = randomCustomer.Expiration.Month.ToString("D2"),
+                ExpYear = randomCustomer.Expiration.Year.ToString("D4"),
+                Name = newCustomer.GivenName + " " + qbCustomer.FamilyName,
+                Cvc = randomCustomer.Cvv,
+                Number = randomCustomer.CCNumber
+            };
+
+            List<Card> customerCards = new List<Card>();
+
+            try
+            {
+                customerCards = await qb.Cards.GetCustomerCardsAsync(newCustomer);
+            }
+            catch (QuickBooksException ex)
+            {
+                Console.WriteLine(ex.Message);
+                if (ex.Response != null)
+                    if (ex.Response.Fault != null)
+                        if (ex.Response.Fault.Errors != null)
+                            foreach (Data.Error_Responses.ErrorDetailResponse error in ex.Response.Fault.Errors)
+                            {
+                                Console.WriteLine("Code: {0}", error.Code);
+                                Console.WriteLine("Detail: {0}", error.Detail);
+                                Console.WriteLine("Element: {0}", error.Element);
+                                Console.WriteLine("Message: {0}", error.Message);
+                            }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+            
+            int cardCount = customerCards.Count;
+
+            try
+            {
+                newCard = await qb.Cards.CreateAsync(newCustomer, newCard);
+            }
+            catch (QuickBooksException ex)
+            {
+                Console.WriteLine(ex.Message);
+                foreach (Data.Error_Responses.ErrorDetailResponse error in ex.Response.Fault.Errors)
+                {
+                    Console.WriteLine("Code: {0}", error.Code);
+                    Console.WriteLine("Detail: {0}", error.Detail);
+                    Console.WriteLine("Element: {0}", error.Element);
+                    Console.WriteLine("Message: {0}", error.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            try
+            {
+                customerCards = await qb.Cards.GetCustomerCardsAsync(newCustomer);
+            }
+            catch (QuickBooksException ex)
+            {
+                Console.WriteLine(ex.Message);
+                foreach (Data.Error_Responses.ErrorDetailResponse error in ex.Response.Fault.Errors)
+                {
+                    Console.WriteLine("Code: {0}", error.Code);
+                    Console.WriteLine("Detail: {0}", error.Detail);
+                    Console.WriteLine("Element: {0}", error.Element);
+                    Console.WriteLine("Message: {0}", error.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            Console.WriteLine("Card {0} created for customer {1}. Old count was {2}, new count is {3}.", newCard.Id, newCustomer.DisplayName, cardCount, customerCards.Count);
+
+            Charge newCharge = new Charge
+            {
+                Amount = (Convert.ToDecimal(rand.Next(0, 99999)) + Convert.ToDecimal(rand.Next(0, 99)) / 100),
+                CardOnFile = newCard.Id,
+                Currency = "USD",
+                Capture = true,
+                Context = new PaymentContext
+                {
+                    Tax = 0.00M,
+                    Mobile = false,
+                    IsEcommerce = true,
+                    Recurring = false
+                }
+            };
+
+            try
+            {
+                newCharge = await qb.Charges.CreateChargeAsync(newCharge);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            if (newCharge != null)
+            {
+                Console.WriteLine("Customer Name: {0}", newCustomer.DisplayName);
+                Console.WriteLine("Charge Amount: {0}", newCharge.Amount);
+                Console.WriteLine("Charge Status: {0}", newCharge.Status);
+                Console.WriteLine("Charge AuthCode: {0}", newCharge.AuthCode);
+            }
+
+            SalesReceipt newReceipt = new SalesReceipt
+            {
+                CustomerRef = new Data.Models.Fields.Ref
+                {
+                    Name = newCustomer.DisplayName,
+                    Value = newCustomer.Id.ToString()
+                },
+                Lines = new List<Data.Models.Fields.Line_Items.Invoice_Line.InvoiceLine>(),
+                CreditCardPayment = new Data.Models.Fields.Credit_Card.CreditCardPayment
+                {
+                    CreditChargeResponse = new Data.Models.Fields.Credit_Card.CreditChargeResponse
+                    {
+                        AuthCode = newCharge.AuthCode,
+                        TransactionAuthorizationTime = newCharge.Created,
+                        CcTransId = newCharge.Id,
+                        Status = Data.Models.Fields.Credit_Card.CcPaymentStatus.Completed
+                    },
+                    CreditChargeInfo = new Data.Models.Fields.Credit_Card.CreditChargeInfo
+                    {
+                        Amount = newCharge.Amount,
+                        CcExpiryMonth = Convert.ToInt32(newCharge.Card.ExpMonth),
+                        CcExpiryYear = Convert.ToInt32(newCharge.Card.ExpYear),
+                        BillingAddressStreet = newCharge.Card.Address.StreetAddress,
+                        NameOnAccount = newCharge.Card.Name,
+                        PostalCode = newCharge.Card.Address.PostalCode,
+                        ProcessPayment = true,
+                        Type = newCharge.Card.CardType
+                    }
+                },
+            };
+
+            newReceipt.Lines.Add(new Data.Models.Fields.Line_Items.Invoice_Line.InvoiceLine
+            {
+                Amount = newCharge.Amount,
+                Description = "Second test payment",
+                DetailType = Data.Models.Fields.Line_Items.Invoice_Line.LineDetailType.SalesItemLineDetail,
+                LineDetails = new Data.Models.Fields.Line_Items.Invoice_Line.Line_Details.SalesItemLineDetail
+                {
+                    Quantity = 1,
+                    UnitPrice = newCharge.Amount
+                }
+            });
+
+            try
+            {
+                newReceipt = await qb.SalesReceipts.CreateSalesReceiptAsync(newReceipt);
+            }
+            catch (QuickBooksException ex)
+            {
+                Console.WriteLine(ex.Message);
+                foreach (Data.Error_Responses.ErrorDetailResponse error in ex.Response.Fault.Errors)
+                {
+                    Console.WriteLine("Code: {0}", error.Code);
+                    Console.WriteLine("Detail: {0}", error.Detail);
+                    Console.WriteLine("Element: {0}", error.Element);
+                    Console.WriteLine("Message: {0}", error.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            Console.WriteLine("Receipt {0} created for customer {1}", newReceipt.Id, newCustomer.Id);
+
             Console.ReadLine();
         }
     }

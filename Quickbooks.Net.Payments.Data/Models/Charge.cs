@@ -33,6 +33,9 @@ namespace QuickBooks.Net.Payments.Data.Models
         [JsonProperty("card", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Card Card { get; set; }
 
+        [JsonProperty("cardOnFile", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string CardOnFile { get; set; }
+
         [JsonProperty("context", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public PaymentContext Context { get; set; }
 

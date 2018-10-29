@@ -62,8 +62,8 @@ namespace QuickBooks.Net.Controllers
                 if (requestMethod == HttpMethod.Get)
                 {
 
-                    var objectResponse = await client.GetJsonAsync<JObject>();
-                    return objectResponse[objectName].ToObject<T>();
+                    var objectResponse = await client.GetJsonAsync<T>();
+                    return objectResponse;
                 }
 
                 if (requestMethod == HttpMethod.Post)
@@ -101,12 +101,10 @@ namespace QuickBooks.Net.Controllers
                         xml["Detail"], errorCode);
                 }
 
-                var response =
-                    JsonConvert.DeserializeObject<QuickBooksErrorResponse>(
-                        ex.Call.Response.Content.ReadAsStringAsync().Result);
+                var response = JsonConvert.DeserializeObject<QuickBooksErrorResponse>(ex.Call.Response.Content.ReadAsStringAsync().Result);
 
 
-                throw new QuickBooksException("A Quickbooks exception occurred." + ex.Call.Response.Content.ReadAsStringAsync().Result, response);
+                throw new QuickBooksException("A Quickbooks exception occurred.", response);
             }
         }
 

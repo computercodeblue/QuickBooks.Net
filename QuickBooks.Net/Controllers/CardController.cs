@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using QuickBooks.Net.Data.Models;
 using QuickBooks.Net.Payments.Data.Models;
 
@@ -15,7 +14,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> CreateAsync(string customerId, Card Card)
         {
-            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(Card));
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/cards", HttpMethod.Post, Card);
         }
 
         public async Task<Card> CreateAsync(Customer customer, Card Card)
@@ -25,7 +24,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> CreateFromTokenAsync(string customerId, Token token)
         {
-            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts", HttpMethod.Post, JsonConvert.SerializeObject(token));
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/cards", HttpMethod.Post, token);
         }
 
         public async Task<Card> CreateFromTokenAsync(Customer customer, Token token)
@@ -35,7 +34,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> DeleteAsync(string customerId, string CardId)
         {
-            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts/" + CardId, HttpMethod.Delete, null, false, true);
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/cards/" + CardId, HttpMethod.Delete, null, false, true);
         }
 
         public async Task<Card> DeleteAsync(Customer customer, string CardId)
@@ -55,7 +54,7 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<Card> GetAsync(string customerId, string CardId)
         {
-            return await MakeRequest<Card>("Card", "customers/" + customerId + "/bank-accounts/" + CardId, HttpMethod.Get);
+            return await MakeRequest<Card>("Card", "customers/" + customerId + "/cards/" + CardId, HttpMethod.Get);
         }
 
         public async Task<Card> GetAsync(Customer customer, string CardId)
@@ -65,7 +64,13 @@ namespace QuickBooks.Net.Controllers
 
         public async Task<List<Card>> GetCustomerCardsAsync(string customerId)
         {
-            return await Task.FromResult(new List<Card>(await MakeRequest<Card[]>("System.Array", "/customers/" + customerId + "/bank-accounts", HttpMethod.Get)));
+            Card[] cardArray = await MakeRequest<Card[]>("System.Array", "customers/" + customerId + "/cards", HttpMethod.Get);
+            List<Card> result = new List<Card>();
+
+            if (cardArray != null)
+                result.AddRange(cardArray);
+
+            return result;
         }
 
         public async Task<List<Card>> GetCustomerCardsAsync(Customer customer)
