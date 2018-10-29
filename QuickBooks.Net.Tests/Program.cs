@@ -390,6 +390,17 @@ namespace QuickBooks.Net.Tests
                 }
             });
 
+            newReceipt.Lines.Add(new Data.Models.Fields.Line_Items.Invoice_Line.InvoiceLine
+            {
+                Description = "Test discount percent",
+                DetailType = Data.Models.Fields.Line_Items.Invoice_Line.LineDetailType.SalesItemLineDetail,
+                LineDetails = new Data.Models.Fields.Line_Items.Invoice_Line.Line_Details.DiscountLineDetail
+                {
+                    PercentBased = true,
+                    DiscountPercent = 25M
+                }
+            });
+
             try
             {
                 newReceipt = await qb.SalesReceipts.CreateSalesReceiptAsync(newReceipt);
